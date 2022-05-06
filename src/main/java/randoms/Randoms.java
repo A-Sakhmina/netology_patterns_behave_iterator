@@ -6,12 +6,17 @@ import java.util.List;
 import java.util.Random;
 
 public class Randoms implements Iterable<Integer> {
-    protected Random random;
+    protected Random random = new Random();
+    ;
     private List<Integer> list = new ArrayList<>();
 
     public Randoms(int min, int max) {
-        random = new Random();
-        list.add(random.nextInt(max) + min);
+        int randomValue = 0;
+        int stopValue = 100;
+        while (randomValue != stopValue) {
+            randomValue = random.nextInt(max + 1 - min) + min;
+            list.add(randomValue);
+        }
     }
 
     @Override

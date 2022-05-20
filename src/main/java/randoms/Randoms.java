@@ -1,43 +1,37 @@
 package randoms;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
 public class Randoms implements Iterable<Integer> {
-    protected Random random = new Random();
-    ;
-    private List<Integer> list = new ArrayList<>();
+    protected Random random;
+    private int min;
+    private int max;
+
 
     public Randoms(int min, int max) {
-        int randomValue = 0;
-        int stopValue = 100;
-        while (randomValue != stopValue) {
-            randomValue = random.nextInt(max + 1 - min) + min;
-            list.add(randomValue);
-        }
+        this.min = min;
+        this.max = max;
     }
 
     @Override
     public Iterator<Integer> iterator() {
-
-        return new Iterator<Integer>() {
-            int indexNext = 0;
-
-            @Override
-            public boolean hasNext() {
-                return indexNext < list.size();
-            }
-
-            @Override
-            public Integer next() {
-                int value = list.get(indexNext);
-                indexNext++;
-                return value;
-            }
-        };
+        return new RandomsIterator();
     }
 
-    //...
+    private class RandomsIterator implements Iterator<Integer> {
+        @Override
+        public boolean hasNext() {
+            //т.к. итерация бесконечна
+            return true;
+        }
+
+        @Override
+        public Integer next() {
+            random = new Random();
+            //генерируем случайное число
+            int randomValue = random.nextInt(max + 1 - min) + min;
+            return randomValue;
+        }
+    }
 }
